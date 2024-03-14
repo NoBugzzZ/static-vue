@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>static page vue2</title>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+    <div id="app2">
+        <span :title="message">{{message}}</span>
+    </div>
+    <div id="app3" v-if="isVisible">
+        <p>
+            333
+        </p>
+    </div>
+    <div id="app4">
+        <ol>
+            <li v-for="option in options">
+                {{option.text}}
+            </li>
+        </ol>
+    </div>
+    <div id="app5">
+        <p>{{message}}</p>
+        <button @click="reverse">click</button>
+    </div>
+    <div id="app6">
+        <span>{{name}}</span>
+        <input v-model="name" />
+    </div>
+    <div id="app7">
+        <span>{{name}}</span>
+        <input :value="name" @input="handleInput($event)" />
+    </div>
+    <div id="app8">
+        组件
+        <ol>
+            <my-item v-for="item in items" v-bind:key="item.id" :todo="item"></my-item>
+        </ol>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "hello"
+            }
+        })
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                message: '[111]' + new Date().toLocaleString()
+            }
+        })
+        setInterval(() => {
+            app2.message = new Date().toLocaleString()
+        }, 1000)
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                isVisible: true
+            }
+        })
+        var app4 = new Vue({
+            el: '#app4',
+            data: {
+                options: [
+                    { text: "1" },
+                    { text: "2" }
+                ]
+            }
+        })
+        var app5 = new Vue({
+            el: '#app5',
+            data: {
+                message: "hello"
+            },
+            methods: {
+                reverse() {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+        var app6 = new Vue({
+            el: '#app6',
+            data: {
+                name: '13'
+            }
+        })
+        var app7 = new Vue({
+            el: '#app7',
+            data: {
+                name: 'app7'
+            },
+            methods: {
+                handleInput(event) {
+                    console.log(event.target.value)
+                    this.name = event.target.value
+                }
+            }
+        })
+        Vue.component('my-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        var app8 = new Vue({
+            el: '#app8',
+            data: {
+                items: [
+                    { id: 1, text: '西瓜' },
+                    { id: 2, text: '葡萄' },
+                    { id: 3, text: '苹果' }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>
